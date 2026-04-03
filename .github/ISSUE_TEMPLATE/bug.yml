@@ -41,3 +41,30 @@ body:
       placeholder: "1. 設定画面を開く\n2. 入力する\n3. 保存する"
     validations:
       required: true
+
+  - type: "textarea"
+    id: "occurrence-conditions"
+    attributes:
+      label: "発生条件"
+      description: "発生する条件、対象ユーザー、入力値、事前状態、発生頻度を記載してください。"
+      placeholder: "例: ログイン済みユーザーで毎回発生"
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "expected-behavior"
+    attributes:
+      label: "期待される動作"
+      description: "本来どう動くべきかを記載してください。"
+      placeholder: "例: 保存完了メッセージが表示される"
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "actual-behavior"
+    attributes:
+      label: "実際の動作"
+      description: "実際に発生した結果を記載してください。"
+      placeholder: "例: 保存完了メッセージは表示されるが更新されない"
+    validations:
+      required: true
