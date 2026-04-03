@@ -1,17 +1,7 @@
-name: Bug
-description: 不具合の報告から原因調査、対応内容まで記録する
-title: "[Bug] "
+name: "Bug Probe"
+description: "Bug probe template"
 body:
-  - type: markdown
+  - type: "input"
+    id: "bug-probe-id"
     attributes:
-      value: |
-        不具合の内容を記載してください。原因調査や対応方針が判明している場合はあわせて記載してください。
-
-  - type: textarea
-    id: issue-summary
-    attributes:
-      label: 事象
-      description: 発生している問題を簡潔に記載してください。
-      placeholder: 例: 保存ボタンを押しても変更内容が反映されない
-    validations:
-      required: true
+      label: "Bug Probe Field"
