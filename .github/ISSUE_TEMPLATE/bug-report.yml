@@ -2,7 +2,7 @@ name: "Bug"
 description: "Bug probe template"
 title: "[Bug] "
 body:
-  - type: "input"
+  - type: "textarea"
     id: "bug-probe-id"
     attributes:
       label: "Bug Probe Field"
