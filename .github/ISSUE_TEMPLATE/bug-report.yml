@@ -1,5 +1,6 @@
 name: "Bug"
 description: "Bug probe template"
+title: "[Bug] "
 body:
   - type: "input"
     id: "bug-probe-id"
