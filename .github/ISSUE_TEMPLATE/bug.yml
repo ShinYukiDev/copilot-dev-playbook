@@ -68,3 +68,47 @@ body:
       placeholder: "例: 保存完了メッセージは表示されるが更新されない"
     validations:
       required: true
+
+  - type: "textarea"
+    id: "investigation"
+    attributes:
+      label: "原因調査"
+      description: "調査して分かったこと、確認した範囲、原因候補があれば記載してください。"
+      placeholder: "例: ログ確認の結果、入力値のバリデーション分岐で不整合"
+
+  - type: "textarea"
+    id: "resolution"
+    attributes:
+      label: "対応内容"
+      description: "修正方針、回避策、恒久対応案が決まっていれば記載してください。"
+      placeholder: "例: 条件分岐を修正し、入力値の正規化を追加"
+
+  - type: "textarea"
+    id: "workaround"
+    attributes:
+      label: "暫定回避策"
+      description: "利用者向けの暫定回避策があれば記載してください。"
+      placeholder: "例: 再読み込み後に再実行すると成功する"
+
+  - type: "textarea"
+    id: "verification"
+    attributes:
+      label: "確認内容・未確認事項"
+      description: "修正後に確認した観点、確認結果、未確認事項を記載してください。"
+      placeholder: "例: 再現手順で再発しないことを確認。関連機能の確認は未実施。"
+
+  - type: "textarea"
+    id: "environment"
+    attributes:
+      label: "環境情報"
+      description: "OS、ブラウザ、アプリ版、対象ブランチ、発生環境を記載してください。"
+      placeholder: "例: Windows 11 / Chrome 134 / main / 開発環境"
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "evidence"
+    attributes:
+      label: "証跡"
+      description: "ログ、スクリーンショット、エラーメッセージ、関連URLがあれば記載してください。"
+      placeholder: "例: 500 Internal Server Error, /settings/profile"
