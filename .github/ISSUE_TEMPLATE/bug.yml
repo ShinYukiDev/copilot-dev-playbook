@@ -1,10 +1,12 @@
 name: "Bug"
-description: "Bug probe template"
+description: "不具合の報告から原因調査、対応内容まで記録する"
 title: "[Bug] "
 body:
   - type: "textarea"
     id: "bug-probe-id"
     attributes:
-      label: "Bug Probe Field"
+      label: "事象"
+      description: "発生している問題を簡潔に記載してください。"
+      placeholder: "例: 保存ボタンを押しても変更内容が反映されない"
     validations:
       required: true
