@@ -10,3 +10,34 @@ body:
       placeholder: "例: 保存ボタンを押しても変更内容が反映されない"
     validations:
       required: true
+
+  - type: "dropdown"
+    id: "priority"
+    attributes:
+      label: "優先度"
+      description: "業務影響に応じて選択してください。"
+      options:
+        - "Critical"
+        - "High"
+        - "Medium"
+        - "Low"
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "impact-scope"
+    attributes:
+      label: "影響範囲"
+      description: "どのユーザー、機能、画面、運用に影響するかを記載してください。"
+      placeholder: "例: 管理者ユーザーのみ影響"
+    validations:
+      required: true
+
+  - type: "textarea"
+    id: "steps-to-reproduce"
+    attributes:
+      label: "再現手順"
+      description: "第三者が同じ条件で再現できるように記載してください。"
+      placeholder: "1. 設定画面を開く\n2. 入力する\n3. 保存する"
+    validations:
+      required: true
