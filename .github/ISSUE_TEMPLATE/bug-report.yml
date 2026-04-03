@@ -1,4 +1,4 @@
-name: "Bug Probe"
+name: "Bug"
 description: "Bug probe template"
 body:
   - type: "input"
