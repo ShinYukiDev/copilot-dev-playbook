@@ -6,3 +6,5 @@ body:
     id: "bug-probe-id"
     attributes:
       label: "Bug Probe Field"
+    validations:
+      required: true
