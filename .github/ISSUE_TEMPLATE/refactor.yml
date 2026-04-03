@@ -72,3 +72,4 @@ body:
         - 既存運用で支障が出ないことを確認する
     validations:
       required: true
+
