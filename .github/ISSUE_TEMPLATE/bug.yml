@@ -2,6 +2,11 @@ name: "Bug"
 description: "不具合の報告から原因調査、対応内容まで記録する"
 title: "[Bug] "
 body:
+  - type: markdown
+    attributes:
+      value: |
+        不具合の内容を記載してください。原因調査や対応方針が判明している場合はあわせて記載してください。
+
   - type: "textarea"
     id: "bug-probe-id"
     attributes:
