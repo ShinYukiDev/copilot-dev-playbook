@@ -34,7 +34,11 @@ body:
     attributes:
       label: "影響範囲"
       description: "どのユーザー、機能、画面、運用に影響するかを記載してください。"
-      placeholder: "例: 管理者ユーザーのみ影響"
+      placeholder: |
+        例:
+        - 管理者ユーザーのみ影響
+        - CSV 取込機能全体に影響
+        - 月次運用作業が継続できない
     validations:
       required: true
 
