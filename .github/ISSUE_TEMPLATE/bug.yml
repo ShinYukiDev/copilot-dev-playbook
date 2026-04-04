@@ -92,7 +92,11 @@ body:
     attributes:
       label: "原因調査"
       description: "調査して分かったこと、確認した範囲、原因候補があれば記載してください。"
-      placeholder: "例: ログ確認の結果、入力値のバリデーション分岐で不整合"
+      placeholder: |
+        例:
+        - 〇〇の設定値が未反映だった
+        - △△の条件分岐で想定外の値が入っていた
+        - ログと再現確認の結果、原因は ×× と判断した
 
   - type: "textarea"
     id: "resolution"
