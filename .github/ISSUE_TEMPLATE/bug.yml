@@ -61,7 +61,11 @@ body:
     attributes:
       label: "発生条件"
       description: "発生する条件、対象ユーザー、入力値、事前状態、発生頻度を記載してください。"
-      placeholder: "例: ログイン済みユーザーで毎回発生"
+      placeholder: |
+        例:
+        - ログイン済みユーザーで発生
+        - 特定のCSVファイルをアップロードした場合に発生
+        - 毎回発生 / ときどき発生
     validations:
       required: true
 
@@ -69,8 +73,8 @@ body:
     id: "expected-behavior"
     attributes:
       label: "期待される動作"
-      description: "本来どう動くべきかを記載してください。"
-      placeholder: "例: 保存完了メッセージが表示される"
+      description: "本来どう動くべきかを、画面表示、メッセージ、データ更新結果を含めて記載してください。"
+      placeholder: "例: 保存完了メッセージが表示され、一覧画面に変更内容が反映される"
     validations:
       required: true
 
@@ -78,8 +82,8 @@ body:
     id: "actual-behavior"
     attributes:
       label: "実際の動作"
-      description: "実際に発生した結果を記載してください。"
-      placeholder: "例: 保存完了メッセージは表示されるが更新されない"
+      description: "実際に発生した結果を、表示メッセージ、挙動、データ状態を含めて記載してください。"
+      placeholder: "例: 保存完了メッセージは表示されるが、一覧画面に変更内容が反映されない"
     validations:
       required: true
 
