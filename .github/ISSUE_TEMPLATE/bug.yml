@@ -20,7 +20,7 @@ body:
     id: "priority"
     attributes:
       label: "優先度"
-      description: "業務影響に応じて選択してください。"
+      description: "業務影響に応じて選択してください。Critical は業務停止または全ユーザー影響、High は主要機能停止または 50%以上のユーザー影響、Medium は回避策ありの一部機能影響、Low は限定的な影響です。"
       options:
         - "Critical"
         - "High"
