@@ -12,6 +12,6 @@ body:
     attributes:
       label: 概要
       description: 何を実現したいかを簡潔に記載してください。
-      placeholder: 例: Issue テンプレートを導入し、記載内容を標準化する
+      placeholder: "例: Issue テンプレートを導入し、記載内容を標準化する"
     validations:
       required: true
