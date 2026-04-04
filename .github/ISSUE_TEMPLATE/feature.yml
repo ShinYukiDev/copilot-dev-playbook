@@ -1,5 +1,5 @@
-name: Feature
-description: 新機能追加や利用者価値を高める機能改善を提案する
+name: "Feature"
+description: "新機能追加や利用者価値を高める機能改善を提案する"
 title: "[Feature] "
 body:
   - type: markdown
