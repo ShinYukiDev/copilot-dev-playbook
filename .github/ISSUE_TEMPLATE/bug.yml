@@ -103,7 +103,11 @@ body:
     attributes:
       label: "対応内容"
       description: "修正方針、回避策、恒久対応案が決まっていれば記載してください。"
-      placeholder: "例: 条件分岐を修正し、入力値の正規化を追加"
+      placeholder: |
+        例:
+        - 入力条件の取り扱いを見直す
+        - 対象処理の分岐条件を修正する
+        - 暫定回避策を案内し、恒久対応は別途実施する
 
   - type: "textarea"
     id: "workaround"
