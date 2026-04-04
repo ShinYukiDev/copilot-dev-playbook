@@ -141,4 +141,8 @@ body:
     attributes:
       label: "証跡"
       description: "ログ、スクリーンショット、エラーメッセージ、関連URLがあれば記載してください。"
-      placeholder: "例: 500 Internal Server Error, /settings/profile"
+      placeholder: |
+        例:
+        - エラーメッセージ: 500 Internal Server Error
+        - ログ: save() 実行時に NullReferenceException
+        - URL: /settings/profile
