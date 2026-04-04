@@ -46,8 +46,13 @@ body:
     id: "steps-to-reproduce"
     attributes:
       label: "再現手順"
-      description: "第三者が同じ条件で再現できるように記載してください。"
-      placeholder: "1. 設定画面を開く\n2. 入力する\n3. 保存する"
+      description: "対象画面、入力値、操作順、実行回数を含めて、第三者が同じ条件で再現できるように記載してください。"
+      placeholder: |
+        1. 設定画面を開く
+        2. 表示名に「テスト太郎」を入力する
+        3. 保存ボタンを1回押す
+        4. 一覧画面へ戻る
+        5. 表示名が更新されていないことを確認する
     validations:
       required: true
 
