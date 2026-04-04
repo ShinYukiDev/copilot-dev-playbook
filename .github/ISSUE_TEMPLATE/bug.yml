@@ -109,7 +109,11 @@ body:
     attributes:
       label: "確認内容・未確認事項"
       description: "修正後に確認した観点、確認結果、未確認事項を記載してください。"
-      placeholder: "例: 再現手順で再発しないことを確認。関連機能の確認は未実施。"
+      placeholder: |
+        例:
+        - 再現手順で不具合が発生しないことを確認
+        - 関連機能A、Bに影響がないことを確認
+        - 本番環境での確認は未実施
 
   - type: "textarea"
     id: "environment"
