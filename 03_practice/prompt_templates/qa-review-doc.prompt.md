@@ -1,5 +1,5 @@
 ---
-name: "review-doc"
+name: "qa-review-doc"
 description: "仕様書・手順書などの文書をレビューし、問題点と改善提案を表示する。"
 argument-hint: "レビュー対象の文書（仕様書・手順書など）。レビュー時に重視する観点。"
 agent: "agent"
