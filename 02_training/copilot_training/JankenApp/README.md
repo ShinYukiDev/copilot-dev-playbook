@@ -35,21 +35,27 @@ JankenApp/
 ### 1. ソリューション・プロジェクト作成
 
 - VS Code上で作成。
-- またはターミナルで以下を実行。
+- ビルドが成功することを確認します。
+
+※ 下記コマンドをターミナルで実行でも同様の操作が可能です。
 
   ```powershell
+  # ソリューションファイルを作成
   dotnet new sln -n JankenApp --format sln
+  # コンソールアプリ（本体）プロジェクトを作成
   dotnet new console -o src/JankenApp
+  # xUnitテストプロジェクトを作成
   dotnet new xunit -o tests/JankenApp.Tests
+  # ソリューションにプロジェクトを追加
   dotnet sln add src/JankenApp/JankenApp.csproj
   dotnet sln add tests/JankenApp.Tests/JankenApp.Tests.csproj
+  # テストプロジェクトから本体プロジェクトを参照
   dotnet add tests/JankenApp.Tests/JankenApp.Tests.csproj reference src/JankenApp/JankenApp.csproj
+  # ビルド実行
   dotnet build
   ```
 
-- ビルドが成功することを確認します。
-
-### 2. Copilotでコメント駆動実装
+### 2. Copilotでコメント駆動開発
 
 `src/JankenApp/Program.cs` でコメントを書き、Copilotの提案を活用して実装します。
 
@@ -63,6 +69,10 @@ JankenApp/
 
 ```csharp
 // コンピュータの手をランダムに生成する
+```
+
+```csharp
+// ユーザーとコンピュータの手を表示する
 ```
 
 ```csharp
