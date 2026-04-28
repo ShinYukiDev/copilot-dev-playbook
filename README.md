@@ -32,7 +32,7 @@
 └ git_github_training/
 
 03_practice/
-├ prompt_templates/
+├ prompts/
 └ instruction_templates/
 
 04_best_practices/
