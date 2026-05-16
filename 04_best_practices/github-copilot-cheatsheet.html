@@ -1,0 +1,503 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Copilot 活用チートシート</title>
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --sheet: #ffffff;
+      --ink: #1b2430;
+      --muted: #566172;
+      --line: #d6e0ec;
+      --brand: #0a6f5a;
+      --brand-soft: #e7f4f0;
+      --warn: #f59f00;
+      --danger: #c92a2a;
+      --accent: #1f4fbf;
+      --code: #f7f9fc;
+      --shadow: 0 12px 28px rgba(17, 35, 64, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif;
+      line-height: 1.7;
+      background:
+        radial-gradient(circle at 12% 12%, #dbe9ff 0%, transparent 32%),
+        radial-gradient(circle at 86% 16%, #d8f2e7 0%, transparent 34%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    }
+
+    .container {
+      width: min(1180px, 92vw);
+      margin: 26px auto 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #eef7ff 45%, #eaf9f3 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      background: #e4f5ef;
+      color: #0a5a49;
+      border: 1px solid #bfe6da;
+      padding: 4px 12px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.25;
+    }
+
+    h1 {
+      font-size: clamp(1.7rem, 3.2vw, 2.45rem);
+      letter-spacing: 0.01em;
+    }
+
+    h2 {
+      margin-top: 32px;
+      font-size: clamp(1.28rem, 2.1vw, 1.8rem);
+      border-left: 6px solid var(--brand);
+      padding-left: 11px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-size: 1.06rem;
+      color: #1f4a9b;
+    }
+
+    p {
+      margin: 8px 0 12px;
+    }
+
+    .lead {
+      color: #2d3c4d;
+    }
+
+    .card {
+      margin-top: 14px;
+      background: var(--sheet);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .panel h4 {
+      margin: 2px 0 6px;
+      font-size: 1rem;
+      color: #163c73;
+    }
+
+    .panel .kicker {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .good {
+      color: #0a6f5a;
+      font-weight: 700;
+    }
+
+    .warn {
+      color: #8a5c00;
+      font-weight: 700;
+    }
+
+    .danger {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid #c6d8ee;
+      background: #f2f7ff;
+      color: #294b79;
+      font-size: 0.83rem;
+      padding: 4px 10px;
+      margin: 4px 8px 4px 0;
+    }
+
+    pre {
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #e1e8f1;
+      background: var(--code);
+      padding: 12px;
+      overflow: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      line-height: 1.45;
+      font-size: 0.9rem;
+    }
+
+    .flow {
+      margin-top: 12px;
+      border: 1px dashed #bdd0e6;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px;
+      position: relative;
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+    }
+
+    .step h4 {
+      margin: 8px 0 6px;
+      color: #133d66;
+      font-size: 0.98rem;
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .check {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .check h4 {
+      margin: 0 0 6px;
+      color: #114257;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 34px;
+      color: #5b6676;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .two-col,
+      .three-col,
+      .timeline,
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="badge">Team Productivity Booster</span>
+      <h1>GitHub Copilot 最大活用<br />システム開発・保守 チートシート</h1>
+      <p class="lead">チーム全体で品質と速度を両立するための、実務特化の運用ガイドです。開発だけでなく、調査・保守・レビュー・ドキュメント更新までを対象にしています。</p>
+      <div>
+        <span class="pill">開発速度</span>
+        <span class="pill">品質担保</span>
+        <span class="pill">知識共有</span>
+        <span class="pill">保守性向上</span>
+      </div>
+    </section>
+
+    <h2>1. まず押さえる原則</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>Copilotは「共同作業者」</h4>
+        <ul>
+          <li>丸投げではなく、要件・制約・観点を渡すほど精度が上がる。</li>
+          <li>正解を当てるより、候補を早く出して比較する用途が強い。</li>
+          <li>レビュー対象として扱い、必ず人が最終判断する。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>成果を出す3条件</h4>
+        <ul>
+          <li><strong>コンテキスト：</strong>仕様・設計・既存コードへのアクセス</li>
+          <li><strong>分解：</strong>タスクを小さくして順番に依頼</li>
+          <li><strong>検証：</strong>テスト・静的解析・観点レビュー</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>2. 開発フローに組み込む（図解）</h2>
+    <div class="card">
+      <p>以下のループを標準化すると、Copilot利用が属人化せずチーム資産になります。</p>
+      <div class="flow">
+        <svg viewBox="0 0 1100 300" width="100%" aria-label="Copilot活用開発フロー図">
+          <defs>
+            <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#1f4fbf"></polygon>
+            </marker>
+          </defs>
+
+          <rect x="24" y="78" width="190" height="86" rx="12" fill="#ebf3ff" stroke="#a5c0ea"></rect>
+          <text x="119" y="108" text-anchor="middle" font-size="18" fill="#1f4a9b">要件整理</text>
+          <text x="119" y="132" text-anchor="middle" font-size="13" fill="#355f9e">目的・制約を明確化</text>
+
+          <rect x="244" y="78" width="190" height="86" rx="12" fill="#eaf9f1" stroke="#9cd8bb"></rect>
+          <text x="339" y="108" text-anchor="middle" font-size="18" fill="#14684f">実装依頼</text>
+          <text x="339" y="132" text-anchor="middle" font-size="13" fill="#2f7a63">小タスクで指示</text>
+
+          <rect x="464" y="78" width="190" height="86" rx="12" fill="#fff8e9" stroke="#e6cd88"></rect>
+          <text x="559" y="108" text-anchor="middle" font-size="18" fill="#7a5900">検証</text>
+          <text x="559" y="132" text-anchor="middle" font-size="13" fill="#8c6b18">テスト・lint・実機確認</text>
+
+          <rect x="684" y="78" width="190" height="86" rx="12" fill="#f3ecff" stroke="#c2b0e5"></rect>
+          <text x="779" y="108" text-anchor="middle" font-size="18" fill="#5b448f">レビュー</text>
+          <text x="779" y="132" text-anchor="middle" font-size="13" fill="#755ea8">設計・性能・保守観点</text>
+
+          <rect x="904" y="78" width="170" height="86" rx="12" fill="#eef2f8" stroke="#b8c8dd"></rect>
+          <text x="989" y="108" text-anchor="middle" font-size="18" fill="#314b73">知識化</text>
+          <text x="989" y="132" text-anchor="middle" font-size="13" fill="#49628b">Docs/Prompt更新</text>
+
+          <line x1="214" y1="121" x2="244" y2="121" stroke="#1f4fbf" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="434" y1="121" x2="464" y2="121" stroke="#1f4fbf" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="654" y1="121" x2="684" y2="121" stroke="#1f4fbf" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="874" y1="121" x2="904" y2="121" stroke="#1f4fbf" stroke-width="3" marker-end="url(#arr)"></line>
+
+          <path d="M 989 172 C 990 252, 220 252, 118 170" fill="none" stroke="#0a6f5a" stroke-width="3" marker-end="url(#arr)"></path>
+          <text x="525" y="274" text-anchor="middle" font-size="14" fill="#1a6a56">改善ループ: 学んだ内容を設計書・プロンプトに反映</text>
+        </svg>
+      </div>
+    </div>
+
+    <h2>3. プロンプト設計の型（そのまま使える）</h2>
+    <div class="card">
+      <div class="two-col">
+        <section class="panel">
+          <div class="kicker">実装依頼</div>
+          <h4>Template A</h4>
+          <pre>目的: ○○機能を追加
+制約: 既存API互換, N+1禁止
+対象: △△Service, □□Repository
+成果物: 実装 + テスト + 変更理由
+観点: 可読性, 例外処理, 性能</pre>
+        </section>
+        <section class="panel">
+          <div class="kicker">バグ調査</div>
+          <h4>Template B</h4>
+          <pre>症状: 〜で500エラー
+再現条件: A手順で100%
+仮説: Null参照 / 競合 / 設定漏れ
+依頼: 原因候補を優先度順に列挙し
+最小修正案を提案</pre>
+        </section>
+        <section class="panel">
+          <div class="kicker">コードレビュー</div>
+          <h4>Template C</h4>
+          <pre>対象PR: #123
+レビュー観点:
+1) 破壊的変更の有無
+2) 性能劣化リスク
+3) 例外時のふるまい
+4) テスト不足箇所</pre>
+        </section>
+        <section class="panel">
+          <div class="kicker">問い合わせ調査</div>
+          <h4>Template D</h4>
+          <pre>問い合わせ内容: 〜
+発生日時/頻度: 〜
+影響範囲: ユーザー数, 業務影響
+確認済み情報: ログ, メトリクス, 直近変更
+依頼:
+1) 原因候補を可能性順に3件
+2) 追加で確認すべきデータ
+3) 一次回答文（利用者向け）
+4) 恒久対策の案</pre>
+        </section>
+      </div>
+      <p><span class="good">コツ:</span> 「目的・制約・対象・観点」を固定フォーマット化すると、回答品質が安定します。</p>
+    </div>
+
+    <h2>4. 開発タスク別ベストプラクティス</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>新規機能実装</h4>
+        <ul>
+          <li>いきなり実装させず、まず実装方針と影響範囲を出させる。</li>
+          <li>生成コードには必ず「異常系テスト」を追加させる。</li>
+          <li>PR説明文の草案も同時生成し、レビュー時間を短縮する。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>リファクタリング</h4>
+        <ul>
+          <li>挙動維持を明記する（仕様変更なし）。</li>
+          <li>関数分割、命名改善、重複排除を段階的に行う。</li>
+          <li>差分が大きい場合は機械的変更と意味変更を分離する。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>障害対応・保守</h4>
+        <ul>
+          <li>ログから時系列を要約させ、再現性の高い仮説から検証する。</li>
+          <li>暫定対応と恒久対応を分けて提案させる。</li>
+          <li>再発防止の監視・アラート追加まで依頼する。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>テスト設計</h4>
+        <ul>
+          <li>正常系だけでなく境界値・異常系を必ず列挙する。</li>
+          <li>ユニット / 結合 / E2Eの責務を明確に分ける。</li>
+          <li>「落ちるべきテスト」を先に書く。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>5. やってはいけない使い方</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4 class="danger">NGパターン</h4>
+        <ul>
+          <li>要件なしで「全部作って」。</li>
+          <li>生成コードを未検証でマージ。</li>
+          <li>セキュリティ要件や性能要件を省略。</li>
+          <li>巨大な変更を一度に依頼。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4 class="good">推奨パターン</h4>
+        <ul>
+          <li>小さな単位で依頼して即検証。</li>
+          <li>設計意図を先に確認してから実装。</li>
+          <li>レビュー観点を固定化して品質を平準化。</li>
+          <li>学びをdocs/プロンプトに還元。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>6. チーム運用ルール（最小セット）</h2>
+    <div class="card">
+      <div class="timeline">
+        <section class="step">
+          <h4>Step 1: 共通プロンプト整備</h4>
+          <p>実装・調査・レビューのテンプレートを共有。</p>
+        </section>
+        <section class="step">
+          <h4>Step 2: PRチェック統一</h4>
+          <p>性能・例外・セキュリティ・テストを必須観点化。</p>
+        </section>
+        <section class="step">
+          <h4>Step 3: ナレッジ蓄積</h4>
+          <p>有効プロンプトと失敗例を残して再利用。</p>
+        </section>
+        <section class="step">
+          <h4>Step 4: 定例ふりかえり</h4>
+          <p>速度と品質を指標化し、運用を毎月更新。</p>
+        </section>
+      </div>
+    </div>
+
+    <h2>7. 即実践チェックリスト</h2>
+    <div class="card checklist">
+      <section class="check">
+        <h4>開発開始前</h4>
+        <ul>
+          <li>目的・完了条件を明文化したか</li>
+          <li>制約（性能・互換・セキュリティ）を書いたか</li>
+          <li>影響範囲の確認をCopilotに依頼したか</li>
+        </ul>
+      </section>
+      <section class="check">
+        <h4>実装中</h4>
+        <ul>
+          <li>小タスクで依頼しているか</li>
+          <li>例外系・境界値を含めているか</li>
+          <li>根拠の説明を求めているか</li>
+        </ul>
+      </section>
+      <section class="check">
+        <h4>PR前</h4>
+        <ul>
+          <li>テスト結果を添付したか</li>
+          <li>破壊的変更の有無を明記したか</li>
+          <li>運用影響（監視・ログ）を確認したか</li>
+        </ul>
+      </section>
+      <section class="check">
+        <h4>保守運用</h4>
+        <ul>
+          <li>障害の再現手順を文書化したか</li>
+          <li>再発防止策をチケット化したか</li>
+          <li>有効だったプロンプトを蓄積したか</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>8. 30秒版まとめ</h2>
+    <div class="card">
+      <pre>1) Copilotには「目的・制約・観点」を渡す
+2) タスクは小さく分割して依頼する
+3) 生成結果は必ずテストとレビューで検証する
+4) 学びを設計書とプロンプトに戻してチーム資産化する</pre>
+      <p><span class="warn">重要:</span> Copilot導入の差は、個人スキルより「チーム運用設計」で決まります。</p>
+    </div>
+
+    <p class="footer">GitHub Copilot Cheat Sheet for Development & Maintenance</p>
+  </main>
+</body>
+</html>

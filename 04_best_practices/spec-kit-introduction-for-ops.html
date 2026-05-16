@@ -1,0 +1,462 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spec Kit 入門資料（保守運用部門向け）</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --paper: #ffffff;
+      --ink: #1c2430;
+      --muted: #5d6878;
+      --line: #d8e1ef;
+      --brand: #0a6f5a;
+      --accent: #2959b8;
+      --note: #f59f00;
+      --good: #2b8a3e;
+      --code: #f7f9fd;
+      --shadow: 0 12px 28px rgba(14, 32, 62, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif;
+      line-height: 1.72;
+      background:
+        radial-gradient(circle at 10% 14%, #dbe9ff 0%, transparent 36%),
+        radial-gradient(circle at 86% 12%, #d9f2e9 0%, transparent 34%),
+        var(--bg);
+    }
+
+    .container {
+      width: min(1160px, 92vw);
+      margin: 26px auto 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #eef5ff 48%, #eaf8f2 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid #bfe4d7;
+      background: #e5f6ef;
+      color: #0a5c4a;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3 { margin: 0 0 12px; line-height: 1.25; }
+
+    h1 { font-size: clamp(1.72rem, 3.3vw, 2.46rem); }
+
+    h2 {
+      margin-top: 32px;
+      font-size: clamp(1.28rem, 2.2vw, 1.78rem);
+      border-left: 6px solid var(--brand);
+      padding-left: 10px;
+    }
+
+    h3 {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      color: #224a94;
+    }
+
+    p { margin: 8px 0 12px; }
+
+    .lead { color: #2e3c4f; }
+
+    .card {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .panel h4 {
+      margin: 2px 0 8px;
+      font-size: 1rem;
+      color: #173f74;
+    }
+
+    ul { margin: 8px 0 0; padding-left: 18px; }
+
+    .pill {
+      display: inline-block;
+      margin: 4px 8px 4px 0;
+      border-radius: 999px;
+      border: 1px solid #c8d8ef;
+      background: #f2f7ff;
+      color: #2e4e7d;
+      font-size: 0.83rem;
+      padding: 4px 10px;
+    }
+
+    .flow {
+      margin-top: 12px;
+      border: 1px dashed #bdd1e8;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+    }
+
+    .table-like {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 210px 1fr 1fr;
+    }
+
+    .cell {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .row .cell:last-child { border-right: 0; }
+
+    .head .cell {
+      background: #f0f6ff;
+      font-weight: 700;
+      color: #26486e;
+    }
+
+    pre {
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #e2e8f2;
+      background: var(--code);
+      padding: 12px;
+      overflow: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      line-height: 1.45;
+      font-size: 0.9rem;
+    }
+
+    .good { color: var(--good); font-weight: 700; }
+    .note { color: #8a5c00; font-weight: 700; }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+      position: relative;
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+    }
+
+    .step h4 {
+      margin: 8px 0 6px;
+      color: #1a486d;
+      font-size: 0.98rem;
+    }
+
+    .footer {
+      margin-top: 34px;
+      text-align: center;
+      color: #5f6b7c;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 920px) {
+      .two-col, .three-col, .timeline, .row {
+        grid-template-columns: 1fr;
+      }
+      .cell { border-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="badge">保守運用部門向け</span>
+      <h1>Spec Kit 説明資料<br />はじめてでも分かる実務活用ガイド</h1>
+      <p class="lead">Spec Kit は、要件を仕様化し、計画・タスク・実装までを一貫して進めるためのオープンソースツールキットです。問い合わせ対応や調査の速度と再現性を高める用途でも有効です。</p>
+      <div>
+        <span class="pill">仕様駆動</span>
+        <span class="pill">再現性</span>
+        <span class="pill">引き継ぎ容易</span>
+        <span class="pill">AI活用の標準化</span>
+      </div>
+    </section>
+
+    <h2>1. Spec Kit とは</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>ひと言で</h4>
+        <p>「思いつき実装」ではなく、<strong>仕様を中心に開発を進める</strong>ための実行可能な枠組みです。</p>
+        <ul>
+          <li>Spec-Driven Development を実践しやすくする。</li>
+          <li>AIエージェント向けコマンド群を提供する。</li>
+          <li>仕様→計画→タスク→実装の流れを標準化する。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>公式情報で確認したポイント</h4>
+        <ul>
+          <li>公式CLI名: specify-cli（GitHubリポジトリから導入）</li>
+          <li>主要コマンド: constitution, specify, plan, tasks, implement</li>
+          <li>補助コマンド: clarify, analyze, checklist</li>
+          <li>拡張: extension と preset で運用をカスタマイズ可能</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>2. 図解: どう使うか（全体フロー）</h2>
+    <div class="card">
+      <p>問い合わせ対応や改修作業でも、以下の順番を守ると品質が安定します。</p>
+      <div class="flow">
+        <svg viewBox="0 0 1100 320" width="100%" aria-label="Spec Kit活用フロー図">
+          <defs>
+            <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#2959b8"></polygon>
+            </marker>
+          </defs>
+
+          <rect x="22" y="90" width="170" height="86" rx="12" fill="#eaf4ff" stroke="#a8c2ea"></rect>
+          <text x="107" y="120" text-anchor="middle" font-size="16" fill="#1e4b95">/speckit.constitution</text>
+          <text x="107" y="144" text-anchor="middle" font-size="13" fill="#3f64a0">原則を決める</text>
+
+          <rect x="214" y="90" width="150" height="86" rx="12" fill="#eaf9f2" stroke="#9ad8be"></rect>
+          <text x="289" y="120" text-anchor="middle" font-size="16" fill="#14684f">/speckit.specify</text>
+          <text x="289" y="144" text-anchor="middle" font-size="13" fill="#2f7d63">何を作るか</text>
+
+          <rect x="386" y="90" width="140" height="86" rx="12" fill="#fff8e8" stroke="#e4ce8a"></rect>
+          <text x="456" y="120" text-anchor="middle" font-size="16" fill="#7b5a0a">/speckit.plan</text>
+          <text x="456" y="144" text-anchor="middle" font-size="13" fill="#927225">どう作るか</text>
+
+          <rect x="548" y="90" width="140" height="86" rx="12" fill="#f3ecff" stroke="#c4b3e5"></rect>
+          <text x="618" y="120" text-anchor="middle" font-size="16" fill="#5f4b92">/speckit.tasks</text>
+          <text x="618" y="144" text-anchor="middle" font-size="13" fill="#785fa9">作業分解</text>
+
+          <rect x="710" y="90" width="170" height="86" rx="12" fill="#ecf7f3" stroke="#a8d8c6"></rect>
+          <text x="795" y="120" text-anchor="middle" font-size="16" fill="#14684f">/speckit.implement</text>
+          <text x="795" y="144" text-anchor="middle" font-size="13" fill="#2f7d63">実装実行</text>
+
+          <rect x="902" y="90" width="174" height="86" rx="12" fill="#edf3fb" stroke="#b8c9df"></rect>
+          <text x="989" y="120" text-anchor="middle" font-size="16" fill="#35557d">レビュー/運用反映</text>
+          <text x="989" y="144" text-anchor="middle" font-size="13" fill="#4c6b90">次回の調査を高速化</text>
+
+          <line x1="192" y1="132" x2="214" y2="132" stroke="#2959b8" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="364" y1="132" x2="386" y2="132" stroke="#2959b8" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="526" y1="132" x2="548" y2="132" stroke="#2959b8" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="688" y1="132" x2="710" y2="132" stroke="#2959b8" stroke-width="3" marker-end="url(#arr)"></line>
+          <line x1="880" y1="132" x2="902" y2="132" stroke="#2959b8" stroke-width="3" marker-end="url(#arr)"></line>
+
+          <path d="M 989 182 C 985 265, 220 265, 105 180" fill="none" stroke="#0a6f5a" stroke-width="3" marker-end="url(#arr)"></path>
+          <text x="540" y="286" text-anchor="middle" font-size="14" fill="#2d5c55">運用で得た知見を原則と仕様に戻し、再利用する</text>
+        </svg>
+      </div>
+    </div>
+
+    <h2>3. 保守運用での具体例</h2>
+    <div class="card">
+      <h3>例: 「月末だけ処理が遅い」問い合わせ</h3>
+      <div class="table-like">
+        <div class="row head">
+          <div class="cell">フェーズ</div>
+          <div class="cell">従来</div>
+          <div class="cell">Spec Kit活用</div>
+        </div>
+        <div class="row">
+          <div class="cell">要件整理</div>
+          <div class="cell">担当者の経験に依存して聞き取り</div>
+          <div class="cell">constitutionで「記録ルール/品質基準」を先に固定</div>
+        </div>
+        <div class="row">
+          <div class="cell">調査仕様化</div>
+          <div class="cell">口頭やチャットで散在</div>
+          <div class="cell">specifyで「症状・影響範囲・完了条件」を文書化</div>
+        </div>
+        <div class="row">
+          <div class="cell">調査計画</div>
+          <div class="cell">確認漏れが発生しやすい</div>
+          <div class="cell">planで確認項目（ログ・DB・バッチ）を構造化</div>
+        </div>
+        <div class="row">
+          <div class="cell">実行</div>
+          <div class="cell">手順が曖昧で再現性が低い</div>
+          <div class="cell">tasks/implementで順序と証跡を揃える</div>
+        </div>
+      </div>
+
+      <h3>実際の入力イメージ</h3>
+      <pre>/speckit.specify
+月末に請求一覧画面の応答が遅くなる問い合わせを調査したい。
+影響は営業部50名。一次回答は本日中に必要。
+完了条件は、原因候補3件と確認ログ、一次回答文の作成。</pre>
+    </div>
+
+    <h2>4. はじめ方（最短）</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>前提</h4>
+        <ul>
+          <li>Python 3.11+</li>
+          <li>Git</li>
+          <li>uv（推奨）または pipx</li>
+          <li>対応AIエージェント（Copilot含む）</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>初期コマンド例</h4>
+        <pre># インストール（バージョン固定推奨）
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@vX.Y.Z
+
+# 既存プロジェクトへ初期化
+specify init . --integration copilot
+
+# 導入確認
+specify check</pre>
+      </section>
+    </div>
+
+    <h2>5. コマンド早見表（保守運用向け）</h2>
+    <div class="card three-col">
+      <section class="panel">
+        <h4>必須</h4>
+        <ul>
+          <li>/speckit.constitution</li>
+          <li>/speckit.specify</li>
+          <li>/speckit.plan</li>
+          <li>/speckit.tasks</li>
+          <li>/speckit.implement</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>品質向上</h4>
+        <ul>
+          <li>/speckit.clarify</li>
+          <li>/speckit.analyze</li>
+          <li>/speckit.checklist</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>拡張</h4>
+        <ul>
+          <li>specify extension search/add</li>
+          <li>specify preset search/add</li>
+          <li>運用ルールに合わせて段階導入</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>6. 導入メリットと注意点</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>メリット</h4>
+        <ul>
+          <li><span class="good">調査の再現性</span>が上がる</li>
+          <li>担当交代時の引き継ぎが容易</li>
+          <li>問い合わせ対応の抜け漏れを減らせる</li>
+          <li>仕様と実装のトレーサビリティを確保しやすい</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>注意点</h4>
+        <ul>
+          <li>最初の仕様記述が曖昧だと成果も曖昧になる</li>
+          <li>生成結果は必ず人がレビューする</li>
+          <li>公式以外の配布物は信頼性を確認する</li>
+          <li>小さな案件から段階導入する</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>7. 30日導入プラン（推奨）</h2>
+    <div class="card timeline">
+      <section class="step">
+        <h4>Week 1</h4>
+        <ul>
+          <li>PoC対象を1業務に絞る</li>
+          <li>constitutionを定義</li>
+          <li>初期化と操作訓練</li>
+        </ul>
+      </section>
+      <section class="step">
+        <h4>Week 2-3</h4>
+        <ul>
+          <li>問い合わせ調査をspecify/plan/tasksで運用</li>
+          <li>checklistで品質確認</li>
+          <li>対応時間を計測</li>
+        </ul>
+      </section>
+      <section class="step">
+        <h4>Week 4</h4>
+        <ul>
+          <li>効果測定（初動時間、再問い合わせ率）</li>
+          <li>必要なextension/presetを選定</li>
+          <li>次月の適用範囲を拡大</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>8. 要点まとめ</h2>
+    <div class="card">
+      <pre>Spec Kitは、仕様を中心にAI活用を標準化するための実践ツールです。
+保守運用では、問い合わせ調査の手順を明文化し、
+再現性・引き継ぎ性・品質を同時に改善しやすくなります。
+まずは小さな範囲で導入し、測定しながら拡大するのが成功パターンです。</pre>
+      <p><span class="note">補足:</span> 公式READMEでは、GitHubリポジトリ経由での導入が案内されています（非公式配布に注意）。</p>
+    </div>
+
+    <p class="footer">Spec Kit Introduction for Maintenance & Operations</p>
+  </main>
+</body>
+</html>

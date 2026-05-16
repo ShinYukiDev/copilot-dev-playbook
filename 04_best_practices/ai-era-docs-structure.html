@@ -1,0 +1,589 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI時代の設計書ディレクトリ構成 完全版</title>
+  <style>
+    :root {
+      --bg: #f4f7f1;
+      --paper: #ffffff;
+      --ink: #1f2a1f;
+      --muted: #5b665b;
+      --line: #d9e2d3;
+      --accent: #006d5b;
+      --accent-2: #f59f00;
+      --accent-3: #2b50aa;
+      --soft: #e8f2ec;
+      --code: #f8faf7;
+      --shadow: 0 10px 30px rgba(20, 40, 20, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 80% 10%, #d7eadf 0%, transparent 35%),
+        radial-gradient(circle at 10% 20%, #e9e8cf 0%, transparent 35%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 28px auto 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f8f4 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.25;
+    }
+
+    h1 {
+      font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+      letter-spacing: 0.02em;
+    }
+
+    h2 {
+      margin-top: 34px;
+      font-size: clamp(1.3rem, 2.3vw, 1.8rem);
+      border-left: 6px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    h3 {
+      margin-top: 22px;
+      font-size: 1.08rem;
+      color: var(--accent-3);
+    }
+
+    p {
+      margin: 8px 0 12px;
+    }
+
+    .lead {
+      font-size: 1.02rem;
+      color: #2d3a2f;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #dff2ea;
+      color: #004f42;
+      font-weight: 700;
+      border: 1px solid #bfe4d5;
+      border-radius: 999px;
+      padding: 4px 12px;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .goal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .goal-box {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f6faf6 100%);
+    }
+
+    .goal-box strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin: 8px 0;
+    }
+
+    pre {
+      margin: 12px 0;
+      background: var(--code);
+      border: 1px solid #e2e9df;
+      border-radius: 10px;
+      padding: 14px;
+      overflow: auto;
+      line-height: 1.45;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 0.92rem;
+    }
+
+    code {
+      font-family: "Consolas", "Courier New", monospace;
+    }
+
+    .pill {
+      display: inline-block;
+      margin: 4px 8px 4px 0;
+      border-radius: 999px;
+      border: 1px solid #c9d8c3;
+      padding: 4px 10px;
+      background: #f7fbf4;
+      font-size: 0.84rem;
+      color: #314131;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .section h4 {
+      margin: 0 0 8px;
+      color: #164a3f;
+      font-size: 1rem;
+    }
+
+    .kicker {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .diagram-wrap {
+      margin-top: 12px;
+      border: 1px dashed #bdd2c3;
+      background: #fbfefb;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .phase {
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 12px;
+      position: relative;
+    }
+
+    .phase::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 4px;
+      width: 100%;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .phase h4 {
+      margin: 8px 0;
+      color: #1c3f37;
+    }
+
+    .note {
+      border-left: 4px solid var(--accent-2);
+      background: #fff9ee;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 34px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 860px) {
+      .goal-grid,
+      .section-grid,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="badge">AIが理解しやすいリポジトリ設計</span>
+      <h1>AI時代の設計書ディレクトリ構成 完全版<br />（GitHub Copilot / RAG / Semantic Search 対応）</h1>
+      <p class="lead">実務でそのまま使える形で、設計ドキュメントの配置・粒度・リンク設計を整理したガイドです。</p>
+    </section>
+
+    <h2>ゴール</h2>
+    <div class="card">
+      <div class="goal-grid">
+        <div class="goal-box">
+          <strong>人</strong>
+          どこに何があるかわかる
+        </div>
+        <div class="goal-box">
+          <strong>AI</strong>
+          業務知識・設計・コード関係を理解できる
+        </div>
+      </div>
+      <div class="arrow">↓ 目指す状態</div>
+      <div class="pill">検索しやすい</div>
+      <div class="pill">参照しやすい</div>
+      <div class="pill">関連を辿りやすい</div>
+    </div>
+
+    <h2>全体像（おすすめ）</h2>
+    <div class="card">
+      <pre>/docs
+├── 00-overview
+├── 01-business
+├── 02-requirements
+├── 03-architecture
+├── 04-db
+├── 05-api
+├── 06-screens
+├── 07-batch
+├── 08-business-rules
+├── 09-test
+├── 10-operations
+├── 11-glossary
+├── 12-decisions
+├── 13-prompts
+└── templates</pre>
+      <p><strong>超重要思想：</strong>「番号付き」にする。AIも人間も順番を理解しやすくなります。</p>
+    </div>
+
+    <h2>各ディレクトリの役割</h2>
+    <div class="section-grid">
+      <article class="section">
+        <h4>① /docs/00-overview</h4>
+        <div class="kicker">プロジェクト概要</div>
+        <pre>00-overview
+├── system-overview.md
+├── scope.md
+├── architecture-summary.md
+└── directory-guide.md</pre>
+        <h3>system-overview.md 例</h3>
+        <pre># システム概要
+
+## 目的
+勤怠・給与管理を効率化する。
+
+## 利用者
+- 人事担当者
+- 管理者
+- 一般社員
+
+## 主要機能
+- 勤怠入力
+- 給与計算
+- 帳票出力</pre>
+        <p><strong>AI効果：</strong>「このシステム何？」を最初に理解できる。</p>
+      </article>
+
+      <article class="section">
+        <h4>② /docs/01-business</h4>
+        <div class="kicker">業務理解（超重要）</div>
+        <pre>01-business
+├── business-flow.md
+├── domain-model.md
+├── organization.md
+└── terminology.md</pre>
+        <p>AIは「業務」を理解すると急激に強くなります。</p>
+        <h3>business-flow.md 例</h3>
+        <pre># 給与計算業務フロー
+
+1. 勤怠入力
+2. 仮締
+3. 本締
+4. 給与計算
+5. 明細出力</pre>
+      </article>
+
+      <article class="section">
+        <h4>③ /docs/02-requirements</h4>
+        <div class="kicker">要件</div>
+        <pre>02-requirements
+├── functional-requirements.md
+├── non-functional-requirements.md
+└── constraints.md</pre>
+        <p>非機能はかなり重要。AIは性能要件を知らないケースが多いです。</p>
+        <h3>非機能要件 例</h3>
+        <pre># 非機能要件
+
+## 応答時間
+3秒以内
+
+## 同時接続数
+200ユーザー</pre>
+      </article>
+
+      <article class="section">
+        <h4>④ /docs/03-architecture</h4>
+        <div class="kicker">アーキテクチャ</div>
+        <pre>03-architecture
+├── architecture.md
+├── layer-design.md
+├── mvvm.md
+├── exception-handling.md
+└── logging-policy.md</pre>
+        <h3>layer-design.md 例</h3>
+        <pre># レイヤ構成
+
+- UI
+- ViewModel
+- Service
+- Repository
+- DB</pre>
+        <p><strong>AI効果：</strong>「Repositoryを作るべき？」を判断しやすい。</p>
+      </article>
+
+      <article class="section">
+        <h4>⑤ /docs/04-db</h4>
+        <div class="kicker">DB設計</div>
+        <pre>04-db
+├── tables
+├── indexes
+├── er
+└── migrations</pre>
+        <h3>tables/M_EMPLOYEE.md 例</h3>
+        <pre># M_EMPLOYEE
+
+## 概要
+社員マスタ
+
+## 主キー
+EMP_ID</pre>
+        <p><strong>ポイント：</strong>「1テーブル1ファイル」はAIに非常に効きます。</p>
+      </article>
+
+      <article class="section">
+        <h4>⑥ /docs/05-api</h4>
+        <pre>05-api
+├── employee-api.md
+├── payroll-api.md
+└── auth-api.md</pre>
+      </article>
+
+      <article class="section">
+        <h4>⑦ /docs/06-screens</h4>
+        <div class="kicker">画面設計</div>
+        <pre>06-screens
+├── SCR-EMP-001.md
+├── SCR-ATT-001.md
+└── SCR-PAY-001.md</pre>
+        <h3>推奨構成</h3>
+        <pre># 画面概要
+# 入力項目
+# 表示項目
+# ボタン
+# バリデーション
+# 使用API
+# 使用テーブル
+# エラー</pre>
+        <p><strong>AI的に超強い：</strong>「画面 ↔ DB ↔ API」が繋がる。</p>
+      </article>
+
+      <article class="section">
+        <h4>⑧ /docs/07-batch</h4>
+        <div class="kicker">バッチ設計（忘れられがち）</div>
+        <pre>07-batch
+├── BAT-PAY-001.md
+└── BAT-BACKUP-001.md</pre>
+      </article>
+
+      <article class="section">
+        <h4>⑨ /docs/08-business-rules</h4>
+        <div class="kicker">業務ルール（最重要級）</div>
+        <pre>08-business-rules
+├── payroll-rules.md
+├── attendance-rules.md
+└── tax-rules.md</pre>
+        <p>ここがRAGの核心になりやすい。</p>
+      </article>
+
+      <article class="section">
+        <h4>⑩ /docs/09-test</h4>
+        <pre>09-test
+├── test-policy.md
+├── test-cases
+└── regression.md</pre>
+      </article>
+
+      <article class="section">
+        <h4>⑪ /docs/10-operations</h4>
+        <div class="kicker">運用設計</div>
+        <pre>10-operations
+├── monitoring.md
+├── backup.md
+├── batch-schedule.md
+└── 장애対応.md</pre>
+      </article>
+
+      <article class="section">
+        <h4>⑫ /docs/11-glossary</h4>
+        <div class="kicker">用語集</div>
+        <p>業務語彙の定義を統一し、人とAIの解釈ブレを減らす。</p>
+      </article>
+
+      <article class="section">
+        <h4>⑬ /docs/12-decisions</h4>
+        <div class="kicker">ADR（超おすすめ）</div>
+        <pre>12-decisions
+├── ADR-001-efcore.md
+├── ADR-002-mvvm.md
+└── ADR-003-oracle.md</pre>
+        <p><strong>ADRとは：</strong>なぜその技術を選んだかを書く文書。</p>
+        <p><strong>AI効果：</strong>「なぜDapperではなくEF？」を説明しやすくなる。</p>
+      </article>
+
+      <article class="section">
+        <h4>⑭ /docs/13-prompts</h4>
+        <div class="kicker">AI活用専用</div>
+        <pre>13-prompts
+├── code-review.md
+├── bug-investigation.md
+└── test-generation.md</pre>
+        <h3>例</h3>
+        <pre># コードレビュー用プロンプト
+
+- 保守性観点
+- Oracle性能観点
+- N+1問題観点</pre>
+      </article>
+    </div>
+
+    <h2>図解：関係性リンクを貼る</h2>
+    <div class="card">
+      <p>AIは関係性に強いため、文書同士をリンクして「辿れる状態」にします。</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 980 320" width="100%" aria-label="画面・API・DB・業務ルールの関係図">
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#2b50aa"></polygon>
+            </marker>
+          </defs>
+
+          <rect x="40" y="60" width="190" height="86" rx="12" fill="#eaf5ff" stroke="#89addf"></rect>
+          <text x="135" y="94" text-anchor="middle" font-size="18" fill="#203a70">画面設計</text>
+          <text x="135" y="120" text-anchor="middle" font-size="14" fill="#35558e">SCR-EMP-001.md</text>
+
+          <rect x="290" y="60" width="190" height="86" rx="12" fill="#eafaf1" stroke="#95cfad"></rect>
+          <text x="385" y="94" text-anchor="middle" font-size="18" fill="#17583d">API設計</text>
+          <text x="385" y="120" text-anchor="middle" font-size="14" fill="#2f7a5b">employee-api.md</text>
+
+          <rect x="540" y="60" width="190" height="86" rx="12" fill="#fff8e8" stroke="#e2c97a"></rect>
+          <text x="635" y="94" text-anchor="middle" font-size="18" fill="#6d4e00">DB設計</text>
+          <text x="635" y="120" text-anchor="middle" font-size="14" fill="#8e6c10">M_EMPLOYEE.md</text>
+
+          <rect x="790" y="60" width="150" height="86" rx="12" fill="#f6edff" stroke="#b9a6de"></rect>
+          <text x="865" y="94" text-anchor="middle" font-size="18" fill="#4e3f70">業務ルール</text>
+          <text x="865" y="120" text-anchor="middle" font-size="14" fill="#6b5897">payroll-rules.md</text>
+
+          <line x1="230" y1="103" x2="290" y2="103" stroke="#2b50aa" stroke-width="3" marker-end="url(#arrowhead)"></line>
+          <line x1="480" y1="103" x2="540" y2="103" stroke="#2b50aa" stroke-width="3" marker-end="url(#arrowhead)"></line>
+          <line x1="730" y1="103" x2="790" y2="103" stroke="#2b50aa" stroke-width="3" marker-end="url(#arrowhead)"></line>
+
+          <text x="262" y="92" text-anchor="middle" font-size="12" fill="#2b50aa">使用API</text>
+          <text x="512" y="92" text-anchor="middle" font-size="12" fill="#2b50aa">使用テーブル</text>
+          <text x="762" y="92" text-anchor="middle" font-size="12" fill="#2b50aa">参照ルール</text>
+
+          <text x="490" y="228" text-anchor="middle" font-size="17" fill="#254025">文書 = 人間 + AI 向け</text>
+          <text x="490" y="252" text-anchor="middle" font-size="14" fill="#486148">リンクがあるほど検索・推論の精度が上がる</text>
+        </svg>
+      </div>
+
+      <h3>画面設計でのリンク例</h3>
+      <pre># 使用テーブル
+- M_EMPLOYEE
+
+# 使用API
+- employee-api.md</pre>
+
+      <h3>DB設計での逆リンク例</h3>
+      <pre># 利用画面
+- SCR-EMP-001</pre>
+    </div>
+
+    <h2>AI時代の本質</h2>
+    <div class="card">
+      <pre>昔： 文書 = 人間向け
+これから： 文書 = 人間 + AI向け</pre>
+    </div>
+
+    <h2>オススメ導入順</h2>
+    <div class="timeline">
+      <section class="phase">
+        <h4>Phase 1</h4>
+        <ul>
+          <li>glossary</li>
+          <li>business-rules</li>
+          <li>copilot-instructions</li>
+        </ul>
+      </section>
+      <section class="phase">
+        <h4>Phase 2</h4>
+        <ul>
+          <li>screen docs markdown化</li>
+          <li>DB docs markdown化</li>
+        </ul>
+      </section>
+      <section class="phase">
+        <h4>Phase 3</h4>
+        <ul>
+          <li>semantic search</li>
+          <li>RAG</li>
+          <li>Vector DB</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="note">
+      最後に超重要: 「リンク」を貼る。AIは関係性に強い。
+    </div>
+
+    <p class="footer">AI時代の設計書ディレクトリ構成ガイド</p>
+  </main>
+</body>
+</html>

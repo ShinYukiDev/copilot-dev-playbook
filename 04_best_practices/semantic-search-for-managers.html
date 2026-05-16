@@ -1,0 +1,518 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>マネージャー向け セマンティックサーチ説明資料</title>
+  <style>
+    :root {
+      --bg: #f4f8f8;
+      --paper: #ffffff;
+      --ink: #1f2a2e;
+      --muted: #5b6871;
+      --line: #d8e2e7;
+      --brand: #0b7a75;
+      --brand-soft: #e8f6f5;
+      --accent: #2f5fb8;
+      --good: #2b8a3e;
+      --warn: #f08c00;
+      --code: #f7fafc;
+      --shadow: 0 12px 28px rgba(25, 45, 60, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.72;
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, #dff2ef 0%, transparent 34%),
+        radial-gradient(circle at 88% 14%, #e4ecff 0%, transparent 35%),
+        var(--bg);
+    }
+
+    .container {
+      width: min(1160px, 92vw);
+      margin: 26px auto 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #eef9f8 50%, #eff4ff 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid #b8e2de;
+      background: #e3f5f3;
+      color: #0b635f;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      line-height: 1.26;
+    }
+
+    h1 {
+      font-size: clamp(1.72rem, 3.2vw, 2.42rem);
+      letter-spacing: 0.01em;
+    }
+
+    h2 {
+      margin-top: 32px;
+      font-size: clamp(1.28rem, 2.1vw, 1.76rem);
+      border-left: 6px solid var(--brand);
+      padding-left: 10px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      color: #1d4e95;
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 8px 0 12px;
+    }
+
+    .lead {
+      color: #2f404b;
+    }
+
+    .card {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .panel h4 {
+      margin: 2px 0 8px;
+      font-size: 1rem;
+      color: #1a4f6f;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .pill {
+      display: inline-block;
+      margin: 4px 8px 4px 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #c6d8e6;
+      background: #f1f7fc;
+      color: #2f4f70;
+      font-size: 0.83rem;
+    }
+
+    .flow {
+      margin-top: 12px;
+      border: 1px dashed #bdd1dc;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fbfdfd;
+    }
+
+    .table-like {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 220px 1fr 1fr;
+    }
+
+    .cell {
+      padding: 10px 12px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .row .cell:last-child {
+      border-right: 0;
+    }
+
+    .row.head .cell {
+      background: #f0f7f7;
+      font-weight: 700;
+      color: #244a53;
+    }
+
+    .ok {
+      color: var(--good);
+      font-weight: 700;
+    }
+
+    .caution {
+      color: #8a5c00;
+      font-weight: 700;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 1.18rem;
+      color: #10475f;
+      margin-top: 4px;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+      position: relative;
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+    }
+
+    .step h4 {
+      margin: 8px 0 6px;
+      color: #1e486b;
+      font-size: 0.98rem;
+    }
+
+    pre {
+      margin: 10px 0;
+      border: 1px solid #e1e8ef;
+      border-radius: 10px;
+      background: var(--code);
+      padding: 12px;
+      overflow: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      line-height: 1.45;
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      margin-top: 34px;
+      text-align: center;
+      color: #5d6875;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 920px) {
+      .two-col,
+      .three-col,
+      .kpi-grid,
+      .phase,
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .row .cell {
+        border-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="badge">Manager Briefing</span>
+      <h1>セマンティックサーチとは何か<br />保守・運用にどう効くか</h1>
+      <p class="lead">キーワード一致ではなく「意味」で探せる検索技術です。問い合わせ対応や障害調査の初動を速め、属人化の緩和に役立ちます。</p>
+      <div>
+        <span class="pill">問い合わせ対応</span>
+        <span class="pill">障害調査</span>
+        <span class="pill">ナレッジ活用</span>
+        <span class="pill">引き継ぎ強化</span>
+      </div>
+    </section>
+
+    <h2>1. ひと言でいうと</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>従来検索（キーワード）</h4>
+        <ul>
+          <li>入力語と同じ単語がないとヒットしにくい。</li>
+          <li>表現ゆれ（例: 障害 / インシデント）に弱い。</li>
+          <li>知っている言葉でしか探せない。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>セマンティックサーチ（意味）</h4>
+        <ul>
+          <li>言い回しが違っても意味が近ければ見つかる。</li>
+          <li>設計書、運用手順、ログ解説など横断で探せる。</li>
+          <li>調査経験が浅いメンバーでも入口を作りやすい。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>2. 図解: どう動くか</h2>
+    <div class="card">
+      <p>文章を数値の座標に変換し、座標どうしの近さで関連情報を返します。ここで重要なのが「意味ベクトル化」と「近傍検索」です。</p>
+      <div class="flow">
+        <svg viewBox="0 0 1080 310" width="100%" aria-label="セマンティックサーチの概念図">
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#2f5fb8"></polygon>
+            </marker>
+          </defs>
+
+          <rect x="24" y="80" width="190" height="86" rx="12" fill="#eaf8f7" stroke="#9cd9d4"></rect>
+          <text x="119" y="110" text-anchor="middle" font-size="17" fill="#0f665f">問い合わせ</text>
+          <text x="119" y="134" text-anchor="middle" font-size="13" fill="#2d7b76">例: 月末に遅い理由</text>
+
+          <rect x="244" y="80" width="200" height="86" rx="12" fill="#eaf2ff" stroke="#a9bfeb"></rect>
+          <text x="344" y="110" text-anchor="middle" font-size="17" fill="#2a4e96">意味ベクトル化</text>
+          <text x="344" y="134" text-anchor="middle" font-size="13" fill="#4768a9">文章を座標に変換</text>
+
+          <rect x="474" y="80" width="200" height="86" rx="12" fill="#fff8e9" stroke="#e2cb8c"></rect>
+          <text x="574" y="110" text-anchor="middle" font-size="17" fill="#7b5a0a">近傍検索</text>
+          <text x="574" y="134" text-anchor="middle" font-size="13" fill="#8f6f21">近い座標を探す</text>
+
+          <rect x="704" y="80" width="200" height="86" rx="12" fill="#f2ecff" stroke="#c4b2e6"></rect>
+          <text x="804" y="110" text-anchor="middle" font-size="17" fill="#5f4a92">候補提示</text>
+          <text x="804" y="134" text-anchor="middle" font-size="13" fill="#7a66ab">設計書/運用手順/過去対応</text>
+
+          <rect x="934" y="80" width="126" height="86" rx="12" fill="#edf5f9" stroke="#b4ccd8"></rect>
+          <text x="997" y="110" text-anchor="middle" font-size="17" fill="#2f5568">回答作成</text>
+          <text x="997" y="134" text-anchor="middle" font-size="13" fill="#496c80">根拠付き対応</text>
+
+          <line x1="214" y1="123" x2="244" y2="123" stroke="#2f5fb8" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="444" y1="123" x2="474" y2="123" stroke="#2f5fb8" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="674" y1="123" x2="704" y2="123" stroke="#2f5fb8" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="904" y1="123" x2="934" y2="123" stroke="#2f5fb8" stroke-width="3" marker-end="url(#arrow)"></line>
+
+          <text x="538" y="260" text-anchor="middle" font-size="14" fill="#356064">ポイント: 単語一致ではなく、意味が近い情報を返す</text>
+        </svg>
+      </div>
+
+      <div class="two-col" style="margin-top: 12px;">
+        <section class="panel">
+          <h4>意味ベクトル化とは</h4>
+          <p>文章の意味を、たくさんの数値で表した「座標」に変換する処理です。</p>
+          <ul>
+            <li>「月末に処理が遅い」→ [0.72, -0.11, 0.43, ...]</li>
+            <li>「締め日のバッチが重い」→ [0.69, -0.09, 0.41, ...]</li>
+            <li>単語が違っても、意味が近いと座標が近くなります。</li>
+          </ul>
+        </section>
+        <section class="panel">
+          <h4>近傍検索とは</h4>
+          <p>問い合わせの座標の近くにある文書を、上位から取り出す処理です。</p>
+          <ul>
+            <li>イメージは「地図で近くの地点を探す」操作に近いです。</li>
+            <li>近い順に、設計書・障害記録・手順書を候補提示します。</li>
+            <li>これにより、言い回しが違っても関連資料に到達できます。</li>
+          </ul>
+        </section>
+      </div>
+
+      <h3>具体例（問い合わせ対応）</h3>
+      <pre>問い合わせ:
+「月末だけ、請求画面が遅くなるのはなぜ？」
+
+近傍検索で上位に出る候補（例）:
+1) バッチ運用手順: 月末締めバッチは 21:00-22:30 に高負荷
+2) 障害記録: 同時間帯のDBロック競合
+3) 性能改善メモ: 請求一覧APIで索引未使用が発生
+
+一次回答（根拠付き）:
+「月末の夜間バッチと画面処理が同時実行され、DB競合が発生している可能性が高い。
+ まずは 21:00-22:30 のAPI応答時間とロック待機を確認する」</pre>
+    </div>
+
+    <h2>3. 保守・運用での具体的効果</h2>
+    <div class="card">
+      <div class="table-like">
+        <div class="row head">
+          <div class="cell">業務シーン</div>
+          <div class="cell">従来の課題</div>
+          <div class="cell">セマンティックサーチ導入後</div>
+        </div>
+        <div class="row">
+          <div class="cell">問い合わせ一次対応</div>
+          <div class="cell">似た事例を探すのに時間がかかる</div>
+          <div class="cell"><span class="ok">過去対応を意味で発見</span>し、初動を短縮</div>
+        </div>
+        <div class="row">
+          <div class="cell">障害原因調査</div>
+          <div class="cell">ログ語彙と設計語彙が一致しない</div>
+          <div class="cell">設計書・障害記録・Runbookを横断し、関連候補を提示</div>
+        </div>
+        <div class="row">
+          <div class="cell">担当引き継ぎ</div>
+          <div class="cell">暗黙知が多く属人化しやすい</div>
+          <div class="cell">検索入口が揃い、経験差の影響を緩和</div>
+        </div>
+        <div class="row">
+          <div class="cell">変更影響の確認</div>
+          <div class="cell">関連資料の見落とし</div>
+          <div class="cell">意味近傍の文書を補助提示し、確認漏れを低減</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>4. よくある誤解</h2>
+    <div class="card three-col">
+      <section class="panel">
+        <h4>誤解1: 何でも正確に答える</h4>
+        <p>実際は「候補提示」が中心。最終判断は人が行う。</p>
+      </section>
+      <section class="panel">
+        <h4>誤解2: 導入すれば即効で完璧</h4>
+        <p>文書品質・タグ設計・更新運用が成果を左右する。</p>
+      </section>
+      <section class="panel">
+        <h4>誤解3: キーワード検索は不要</h4>
+        <p>正解は併用。厳密語検索と意味検索を使い分ける。</p>
+      </section>
+    </div>
+
+    <h2>5. 導入時の最低限ルール</h2>
+    <div class="card two-col">
+      <section class="panel">
+        <h4>対象データの整備</h4>
+        <ul>
+          <li>設計書、運用手順、障害記録、FAQを優先投入。</li>
+          <li>1文書1テーマを意識し、見出しを明確化。</li>
+          <li>更新日と責任者を明記。</li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h4>運用ルール</h4>
+        <ul>
+          <li>回答時は根拠リンクを必須化。</li>
+          <li>誤回答時は原因を記録し、文書側を改善。</li>
+          <li>月次で「検索ヒットしない問い合わせ」をレビュー。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>6. 効果測定KPI（マネージャー向け）</h2>
+    <div class="card">
+      <div class="kpi-grid">
+        <section class="kpi">
+          初動時間
+          <strong>-30% 目標</strong>
+        </section>
+        <section class="kpi">
+          一次解決率
+          <strong>+15pt 目標</strong>
+        </section>
+        <section class="kpi">
+          再問い合わせ率
+          <strong>-20% 目標</strong>
+        </section>
+        <section class="kpi">
+          調査工数
+          <strong>-25% 目標</strong>
+        </section>
+      </div>
+      <p><span class="caution">注意:</span> ツール導入だけでなく、文書整備と運用改善をセットで実施することが前提です。</p>
+    </div>
+
+    <h2>7. 導入ロードマップ（90日）</h2>
+    <div class="card phase">
+      <section class="step">
+        <h4>Phase 1（0-30日）</h4>
+        <ul>
+          <li>対象業務を限定（問い合わせ/障害調査）</li>
+          <li>投入データ選定とクレンジング</li>
+          <li>試験運用チームを決定</li>
+        </ul>
+      </section>
+      <section class="step">
+        <h4>Phase 2（31-60日）</h4>
+        <ul>
+          <li>根拠付き回答の運用開始</li>
+          <li>ヒット率/誤回答をモニタリング</li>
+          <li>不足文書を追加整備</li>
+        </ul>
+      </section>
+      <section class="step">
+        <h4>Phase 3（61-90日）</h4>
+        <ul>
+          <li>KPI評価と対象範囲拡大判断</li>
+          <li>保守運用標準への組み込み</li>
+          <li>部門横展開の計画化</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>8. 30秒で伝える要約</h2>
+    <div class="card">
+      <pre>セマンティックサーチは、
+「単語一致」ではなく「意味」で情報を探す仕組みです。
+保守・運用では、問い合わせ初動と障害調査のスピード向上に効果があり、
+属人化の緩和にも寄与します。
+ただし成果を出す鍵は、文書整備と運用ルールの同時実施です。</pre>
+    </div>
+
+    <p class="footer">Semantic Search Brief for Managers</p>
+  </main>
+</body>
+</html>
