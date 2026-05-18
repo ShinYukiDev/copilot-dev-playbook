@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spec Kit 入門ガイド</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #ffffff;
+      --ink: #1d2633;
+      --muted: #5f6b7d;
+      --line: #d8e1ee;
+      --brand: #0f7a5a;
+      --brand-2: #2457c6;
+      --warm: #ff9f1c;
+      --soft: #eef5ff;
+      --soft-2: #eefaf4;
+      --shadow: 0 14px 34px rgba(23, 42, 77, 0.08);
+      --code: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Meiryo", sans-serif;
+      line-height: 1.78;
+      background:
+        radial-gradient(circle at 14% 12%, rgba(36, 87, 198, 0.12) 0, transparent 30%),
+        radial-gradient(circle at 86% 8%, rgba(15, 122, 90, 0.12) 0, transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, #f5f7fb 100%);
+    }
+
+    .container {
+      width: min(1180px, 92vw);
+      margin: 28px auto 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(135deg, #ffffff 0%, #f1f6ff 52%, #eefaf4 100%);
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(36, 87, 198, 0.16) 0%, rgba(36, 87, 198, 0) 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      border-radius: 999px;
+      background: #e7f7ef;
+      color: #0b5e46;
+      border: 1px solid #b7e2cf;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 12px; line-height: 1.28; }
+
+    h1 { font-size: clamp(1.9rem, 3.8vw, 3rem); }
+
+    h2 {
+      margin-top: 34px;
+      font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+      padding-left: 12px;
+      border-left: 6px solid var(--brand);
+    }
+
+    h3 { font-size: 1.06rem; color: #184a83; }
+
+    p { margin: 8px 0 12px; }
+
+    .lead {
+      max-width: 900px;
+      color: #324357;
+      font-size: 1.02rem;
+    }
+
+    .chips { margin-top: 10px; }
+
+    .chip {
+      display: inline-block;
+      margin: 6px 8px 0 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #c8d8ef;
+      background: #f3f7ff;
+      color: #2e4d7d;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .card.soft-blue { background: linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%); }
+    .card.soft-green { background: linear-gradient(180deg, #ffffff 0%, #f3fbf7 100%); }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .panel h4 { font-size: 1rem; color: #1d4d88; }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 4px 0; }
+
+    .note {
+      display: inline-block;
+      color: #8a5900;
+      font-weight: 700;
+    }
+
+    .good {
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: #a85a00;
+      font-weight: 700;
+    }
+
+    .flow {
+      margin-top: 10px;
+      border-radius: 16px;
+      border: 1px dashed #b9cbe4;
+      background: #fbfdff;
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .table {
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr;
+    }
+
+    .cell {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 14px;
+      background: #fff;
+    }
+
+    .row .cell:last-child { border-right: 0; }
+
+    .head .cell {
+      background: #f0f6ff;
+      color: #224770;
+      font-weight: 700;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #e0e7f2;
+      background: var(--code);
+      overflow: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px;
+      position: relative;
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      border-radius: 14px 14px 0 0;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+    }
+
+    .step h4 {
+      margin-top: 8px;
+      font-size: 0.98rem;
+      color: #184a83;
+    }
+
+    .footer {
+      margin: 34px 0 4px;
+      text-align: center;
+      color: #637286;
+      font-size: 0.92rem;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .grid-2, .grid-3, .timeline, .row {
+        grid-template-columns: 1fr;
+      }
+
+      .cell { border-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">初心者向け / 業務活用</span>
+      <h1>Spec Kit 入門ガイド</h1>
+      <p class="lead">Spec Kit は、最初に仕様を明確にしてから、計画・タスク・実装へ進めるための仕組みです。AIを使うときに起きやすい「何を作るかが曖昧なまま進む問題」を減らし、初心者でも同じ手順で再現しやすい開発・改善の流れを作れます。</p>
+      <div class="chips">
+        <span class="chip">仕様先行</span>
+        <span class="chip">手順の標準化</span>
+        <span class="chip">初心者でも再現しやすい</span>
+        <span class="chip">Copilot で使える</span>
+        <span class="chip">業務改善に向く</span>
+      </div>
+    </section>
+
+    <h2>1. Spec Kit とは</h2>
+    <div class="grid-2">
+      <section class="card soft-blue">
+        <h3>ひとことで言うと</h3>
+        <p>Spec Kit は、<strong>「何を作るか」を先に文章化し、それを元に AI が実装まで進める</strong>ためのオープンソースの仕組みです。</p>
+        <ul>
+          <li>仕様を中心に考えるので、途中で目的がぶれにくい。</li>
+          <li>計画やタスクを分けるので、初学者でも進め方が見えやすい。</li>
+          <li>人による説明の差を減らし、引き継ぎやレビューに使いやすい。</li>
+        </ul>
+      </section>
+      <section class="card soft-green">
+        <h3>公式サイトから押さえるポイント</h3>
+        <ul>
+          <li>Spec Kit は <span class="good">Spec-Driven Development</span> を前提にしている。</li>
+          <li>仕様は「書いて終わり」ではなく、実行に進めるための土台になる。</li>
+          <li>AI を使っても、<span class="good">何を作るか</span>を人が先に定義する考え方が重要。</li>
+          <li>導入後は、<span class="good">必須: /constitution → /specify → /plan → /tasks → /implement</span> の順で進める。</li>
+          <li>品質向上のために <span class="good">任意: /clarify, /analyze, /checklist</span> を組み合わせる。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>2. なぜ業務で役立つのか</h2>
+    <div class="grid-3">
+      <section class="panel">
+        <h4>作業の抜け漏れを減らす</h4>
+        <p>調べる項目や確認条件を先に書くため、口頭ベースのやりとりより漏れが起きにくくなります。</p>
+      </section>
+      <section class="panel">
+        <h4>引き継ぎがしやすい</h4>
+        <p>仕様・計画・タスクが残るので、担当者が変わっても経緯を追いやすくなります。</p>
+      </section>
+      <section class="panel">
+        <h4>AI 活用を標準化できる</h4>
+        <p>毎回の聞き方や進め方を揃えられるため、個人差を減らして使えます。</p>
+      </section>
+    </div>
+
+    <h2>3. 図解: 全体の流れ</h2>
+    <div class="card">
+      <p>Spec Kit は、まず必須コマンド5つで進めます。必要に応じて任意コマンドを補うと、品質と確信度を上げられます。</p>
+      <p><strong>必須（★）:</strong> /constitution → /specify → /plan → /tasks → /implement<br /><strong>任意:</strong> /clarify（plan前）, /analyze（tasks後〜implement前）, /checklist（plan後）</p>
+      <div class="flow">
+        <svg viewBox="0 0 1160 320" width="100%" aria-label="Spec Kit の全体フロー図">
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#2457c6"></polygon>
+            </marker>
+          </defs>
+
+          <rect x="20" y="88" width="168" height="90" rx="14" fill="#eaf4ff" stroke="#aec7ea"></rect>
+          <text x="104" y="120" text-anchor="middle" font-size="17" fill="#1d4e92">/constitution（★）</text>
+          <text x="104" y="146" text-anchor="middle" font-size="13" fill="#3e659d">原則・基準を決める</text>
+
+          <rect x="206" y="88" width="168" height="90" rx="14" fill="#ecfaf2" stroke="#b5e0c8"></rect>
+          <text x="290" y="120" text-anchor="middle" font-size="17" fill="#0b6a4f">/specify（★）</text>
+          <text x="290" y="146" text-anchor="middle" font-size="13" fill="#2f7c5e">何を作るかを明確化</text>
+
+          <rect x="392" y="88" width="150" height="90" rx="14" fill="#fff8e8" stroke="#ead292"></rect>
+          <text x="467" y="120" text-anchor="middle" font-size="17" fill="#8a6409">/clarify</text>
+          <text x="467" y="146" text-anchor="middle" font-size="13" fill="#9a7424">曖昧な点を確認</text>
+
+          <rect x="560" y="88" width="150" height="90" rx="14" fill="#f3efff" stroke="#c8b8e9"></rect>
+          <text x="635" y="120" text-anchor="middle" font-size="17" fill="#6550a1">/plan（★）</text>
+          <text x="635" y="146" text-anchor="middle" font-size="13" fill="#7a64af">どう作るかを決める</text>
+
+          <rect x="728" y="88" width="150" height="90" rx="14" fill="#eefaf4" stroke="#b6e0c5"></rect>
+          <text x="803" y="120" text-anchor="middle" font-size="17" fill="#0b6a4f">/tasks（★）</text>
+          <text x="803" y="146" text-anchor="middle" font-size="13" fill="#2f7c5e">作業に分解する</text>
+
+          <rect x="896" y="88" width="150" height="90" rx="14" fill="#eef5ff" stroke="#bcd0ef"></rect>
+          <text x="971" y="120" text-anchor="middle" font-size="17" fill="#2457c6">/analyze</text>
+          <text x="971" y="146" text-anchor="middle" font-size="13" fill="#4a6eaf">抜け漏れを点検</text>
+
+          <rect x="1064" y="88" width="76" height="90" rx="14" fill="#fff3e5" stroke="#f0c98b"></rect>
+          <text x="1102" y="120" text-anchor="middle" font-size="17" fill="#9d5a00">/implement（★）</text>
+          <text x="1102" y="146" text-anchor="middle" font-size="13" fill="#ad6b0a">実装へ進む</text>
+
+          <line x1="188" y1="133" x2="206" y2="133" stroke="#2457c6" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="374" y1="133" x2="392" y2="133" stroke="#2457c6" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="542" y1="133" x2="560" y2="133" stroke="#2457c6" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="710" y1="133" x2="728" y2="133" stroke="#2457c6" stroke-width="3" marker-end="url(#arrow)"></line>
+          <line x1="878" y1="133" x2="896" y2="133" stroke="#2457c6" stroke-width="3" marker-end="url(#arrow)"></line>
+          <path d="M 1102 182 C 1098 252, 420 252, 290 180" fill="none" stroke="#0f7a5a" stroke-width="3" marker-end="url(#arrow)"></path>
+        </svg>
+      </div>
+    </div>
+
+    <h2>6. 使うコマンドの意味</h2>
+    <div class="card">
+      <div class="table">
+        <div class="row head">
+          <div class="cell">コマンド</div>
+          <div class="cell">役割</div>
+          <div class="cell">初心者向けの見方</div>
+        </div>
+        <div class="row">
+          <div class="cell">/constitution</div>
+          <div class="cell">守るルールや品質基準を決める</div>
+          <div class="cell">最初に決める「仕事の約束事」（必須）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/specify</div>
+          <div class="cell">何を作るかを定義する</div>
+          <div class="cell">要望を仕様に変える入口（必須）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/clarify</div>
+          <div class="cell">曖昧さを質問で埋める</div>
+          <div class="cell">不明点を先に無くす段階（任意）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/plan</div>
+          <div class="cell">実装方針を決める</div>
+          <div class="cell">作り方の設計図を作る（必須）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/tasks</div>
+          <div class="cell">作業を実行単位に分ける</div>
+          <div class="cell">今日やることに落とす（必須）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/analyze</div>
+          <div class="cell">抜け漏れや矛盾を点検する</div>
+          <div class="cell">実装前の最終チェック（任意）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/checklist</div>
+          <div class="cell">品質確認用チェックリストを作る</div>
+          <div class="cell">要件の抜け漏れ確認に使う（任意）</div>
+        </div>
+        <div class="row">
+          <div class="cell">/implement</div>
+          <div class="cell">実装を進める</div>
+          <div class="cell">AI に作業を実行させる段階（必須）</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>4. 導入手順</h2>
+    <div class="card">
+      <p>公式サイトの流れを、初学者向けに最短でまとめると次の通りです。</p>
+      <div class="timeline">
+        <section class="step">
+          <h4>1. CLI を導入する</h4>
+          <p>uv を使って <strong>specify-cli</strong> を入れます。導入確認には <strong>specify --version</strong> を使います。</p>
+        </section>
+        <section class="step">
+          <h4>2. プロジェクトを初期化する</h4>
+          <p><strong>specify init</strong> で既存または新規のプロジェクトに Spec Kit を設定します。Copilot 連携も選べます。</p>
+        </section>
+      </div>
+      <pre># インストール
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+
+# バージョン確認
+specify --version
+
+# プロジェクト初期化
+specify init my-project --ai copilot</pre>
+    </div>
+
+    <h2>5. コマンド別の具体例</h2>
+    <div class="card">
+      <p>例題は <strong>todoアプリの開発</strong> です。<strong>必須コマンド</strong>と<strong>任意コマンド</strong>が分かるように整理しています。</p>
+      <p><span class="good">必須:</span> /constitution, /specify, /plan, /tasks, /implement<br /><span class="note">任意:</span> /clarify, /analyze, /checklist</p>
+      <div class="grid-2">
+        <section class="panel">
+          <h4>constitution の例（必須）</h4>
+          <pre>/constitution
+すべてのドキュメントは日本語で作成・更新する。
+機能は小さく分けて実装する。
+UI はシンプルで、操作手順が分かりやすいことを優先する。</pre>
+        </section>
+        <section class="panel">
+          <h4>specify の例（必須）</h4>
+          <pre>/specify
+todoアプリを開発したい。
+ユーザーはタスクを追加、編集、完了、削除できる。
+一覧では未完了と完了を分けて表示したい。</pre>
+        </section>
+        <section class="panel">
+          <h4>clarify の例（任意）</h4>
+          <pre>/clarify</pre>
+        </section>
+        <section class="panel">
+          <h4>plan の例（必須）</h4>
+          <pre>/plan
+- WinForms（VB、.netframework 4.8）を利用する。
+- DBはSQLiteを利用する。
+- 画面は入力欄、未完了一覧、完了一覧の3領域で構成する。</pre>
+        </section>
+        <section class="panel">
+          <h4>tasks の例（必須）</h4>
+          <pre>/tasks</pre>
+        </section>
+        <section class="panel">
+          <h4>analyze の例（任意）</h4>
+          <pre>/analyze</pre>
+        </section>
+        <section class="panel">
+          <h4>implement の例（必須）</h4>
+          <pre>/implement</pre>
+        </section>
+      </div>
+    </div>
+
+    <h2>8. 初心者がつまずきやすい点</h2>
+    <div class="grid-2">
+      <section class="card">
+        <h3>つまずきポイント</h3>
+        <ul>
+          <li>最初の仕様が広すぎる。</li>
+          <li>技術の話から先に始めてしまう。</li>
+          <li>曖昧なまま /plan に進んでしまう。</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>対策</h3>
+        <ul>
+          <li>まずは 1 業務、1 機能、1 画面に絞る。</li>
+          <li>「何を・なぜ」を先に書く。</li>
+          <li><span class="good">/clarify</span> を使って疑問点を洗い出す。</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>9. 業務で広げるときの考え方</h2>
+    <div class="card">
+      <p>最初から全部に広げるより、<span class="good">小さく始めて、効果が出た型を横展開する</span>ほうが失敗しにくいです。</p>
+      <ul>
+        <li>まずは問い合わせ対応や小さな改善案件で試す。</li>
+        <li>手順が安定したら、チームの共通テンプレートにする。</li>
+        <li>うまくいった書き方や確認項目を constitution に戻して更新する。</li>
+      </ul>
+      <p class="small"><span class="note">補足:</span> 公式サイトでは GitHub リポジトリ、Discussions、動画、導入手順が案内されています。詳細は <a href="https://org/" target="_blank" rel="noreferrer">speckit.org</a> を確認してください。</p>
+    </div>
+
+    <h2>10. まとめ</h2>
+    <div class="card">
+      <p><strong>Spec Kit は、仕様を先に固めてから AI で実装へ進むための仕組みです。</strong> 初学者にとっては、作業の順番が見えること自体が大きな価値になります。業務では、問い合わせ対応、手順整備、小規模な改善案件から始めると効果を実感しやすいです。</p>
+      <p class="warn">重要なのは、AI に任せることではなく、何を作るかを人が明確にすることです。</p>
+    </div>
+
+    <p class="footer">Spec Kit 入門ガイド / 公式情報をもとに作成</p>
+  </main>
+</body>
+</html>
