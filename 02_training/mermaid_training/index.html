@@ -315,7 +315,8 @@
         setStatus(status, "入力が空です。Mermaid記法を入力してください。", false);
         return;
       }
-      const id = `mmd-${type}-${Date.now()}`;
+      renderDiagram._seq ??= 0;
+      const id = `mmd-${type}-${++renderDiagram._seq}`;
       try {
         const { svg } = await mermaid.render(id, source);
         preview.innerHTML = svg;
