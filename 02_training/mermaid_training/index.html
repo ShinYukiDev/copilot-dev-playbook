@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mermaid記法トレーニング（ハンズオン）</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --line: #d9e2ef;
+      --text: #1a2433;
+      --muted: #5f6b7a;
+      --accent: #0067c0;
+      --accent-2: #0f8f4d;
+      --danger: #b83c3c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1, h2, h3 { margin: 0 0 8px; line-height: 1.3; }
+    p, li { margin: 0 0 10px; }
+    ul { margin: 0 0 12px 20px; padding: 0; }
+    .lead {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .small { color: var(--muted); font-size: 0.95rem; }
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.9rem;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      overflow: auto;
+      margin: 8px 0 0;
+    }
+    .editor-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 980px) {
+      .editor-wrap { grid-template-columns: 1fr; }
+    }
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      resize: vertical;
+      background: #fbfcff;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+    button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #fff;
+      cursor: pointer;
+    }
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .preview {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      min-height: 260px;
+      padding: 12px;
+      overflow: auto;
+    }
+    .status { margin-top: 8px; font-weight: 600; }
+    .status.ok { color: var(--accent-2); }
+    .status.ng { color: var(--danger); }
+    .section-title {
+      display: inline-block;
+      background: #e9f3ff;
+      border: 1px solid #c8def7;
+      border-radius: 6px;
+      padding: 4px 8px;
+      margin-bottom: 8px;
+      color: #114a7d;
+      font-size: 0.9rem;
+    }
+    .footer-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .reference a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .reference a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mermaid記法トレーニング（ハンズオン）</h1>
+    <p class="small">対象: Markdown初学者 / 目的: 保守部門の設計書・手順書で図を自力作成できるようになる</p>
+
+    <section class="lead">
+      <h2>学習ゴール</h2>
+      <p>1. <code>flowchart</code> / <code>sequenceDiagram</code> / <code>stateDiagram</code> の用途を区別して使える</p>
+      <p>2. それぞれの基本記述で業務ドキュメント向けの図を作成できる</p>
+      <p>3. エラー表示を見て記法を修正できる</p>
+    </section>
+
+    <section class="card">
+      <h2>フローチャート（flowchart）</h2>
+      <h3>説明</h3>
+      <p>処理の流れ、分岐、担当引き継ぎを表す図です。障害一次対応フローや定型作業手順の表現に向いています。</p>
+      <p><strong>記述方法:</strong> 先頭に <code>flowchart</code> と向き（<code>TD</code> など）を書き、<code>--> </code> でノードをつなぎます。分岐は <code>{条件}</code> を使います。</p>
+      <p><strong>向きの指定:</strong> <code>TD</code> は上から下、<code>LR</code> は左から右に流れるレイアウトです。手順書では <code>TD</code>、横に比較したい図では <code>LR</code> が使いやすいです。</p>
+      <h3>例</h3>
+      <pre>flowchart TD
+  A[障害受付] --> B[一次切り分け]
+  B --> C{復旧できた?}
+  C -->|Yes| D[完了報告]
+  C -->|No| E[二次対応へ連携]
+  D --> F[チケットクローズ]
+  E --> F</pre>
+      <h3>演習</h3>
+      <p class="small">演習: 「定期バックアップの実施フロー（成功/失敗の分岐あり）」を書いてみましょう。</p>
+      <div class="editor-wrap" data-diagram="flow">
+        <div>
+          <label for="flowInput"><strong>Mermaid入力</strong></label>
+          <textarea id="flowInput" spellcheck="false">flowchart TD
+  A[作業開始] --> B{手順書あり?}
+  B -->|Yes| C[手順どおり実施]
+  B -->|No| D[上長へ確認]
+  C --> E[結果記録]
+  D --> E</textarea>
+          <div class="toolbar">
+            <button class="primary render-btn" data-target="flow">図を描画</button>
+            <button class="reset-btn" data-target="flow">例に戻す</button>
+          </div>
+        </div>
+        <div>
+          <strong>プレビュー</strong>
+          <div id="flowPreview" class="preview"></div>
+          <div id="flowStatus" class="status"></div>
+        </div>
+      </div>
+      <p class="footer-note">エラー例: <code>flowchart TD</code> の書き忘れ、矢印 <code>--></code> の不足、ノード括弧の閉じ忘れ。</p>
+    </section>
+
+    <section class="card">
+      <h2>シーケンス図（sequenceDiagram）</h2>
+      <h3>説明</h3>
+      <p>誰が誰に、どの順序で連絡・処理を行うかを時系列で表す図です。メンテナンス連絡や問い合わせ対応の流れに向いています。</p>
+      <p><strong>記述方法:</strong> 先頭に <code>sequenceDiagram</code> を書き、<code>participant</code> で登場者を定義します。送信矢印は <code>->></code>、返信は <code>-->></code> で記述します。</p>
+      <h3>例</h3>
+      <pre>sequenceDiagram
+  participant OP as 運用担当
+  participant US as 利用部門
+  participant SYS as 対象システム
+  OP->>US: メンテナンス通知
+  US-->>OP: 了承
+  OP->>SYS: 停止
+  OP->>SYS: 作業実施
+  OP->>SYS: 起動確認
+  OP->>US: 完了連絡</pre>
+      <h3>演習</h3>
+      <p class="small">演習: 「利用者から障害連絡を受け、運用担当が調査して一次回答する」流れを書いてみましょう。</p>
+      <div class="editor-wrap" data-diagram="sequence">
+        <div>
+          <label for="sequenceInput"><strong>Mermaid入力</strong></label>
+          <textarea id="sequenceInput" spellcheck="false">sequenceDiagram
+  participant U as 利用者
+  participant O as 運用担当
+  participant S as システム
+  U->>O: 障害連絡
+  O->>S: ログ確認
+  S-->>O: 調査結果
+  O-->>U: 一次回答</textarea>
+          <div class="toolbar">
+            <button class="primary render-btn" data-target="sequence">図を描画</button>
+            <button class="reset-btn" data-target="sequence">例に戻す</button>
+          </div>
+        </div>
+        <div>
+          <strong>プレビュー</strong>
+          <div id="sequencePreview" class="preview"></div>
+          <div id="sequenceStatus" class="status"></div>
+        </div>
+      </div>
+      <p class="footer-note">エラー例: <code>participant</code> 名の未定義、矢印記号のタイプミス。</p>
+    </section>
+
+    <section class="card">
+      <h2>状態遷移図（stateDiagram）</h2>
+      <h3>説明</h3>
+      <p>対象の状態がどの条件・イベントで変わるかを表す図です。障害管理チケットやジョブ実行状態の管理に向いています。</p>
+      <p><strong>記述方法:</strong> 先頭に <code>stateDiagram</code> を書き、<code>A --> B: 条件</code> の形式で遷移を記述します。開始は <code>[*]</code> を使います。</p>
+      <h3>例</h3>
+      <pre>stateDiagram
+  [*] --> 監視中
+  監視中 --> 障害検知: アラート発報
+  障害検知 --> 対応中: 担当アサイン
+  対応中 --> 復旧: 修正完了
+  復旧 --> 監視中: 監視再開</pre>
+      <h3>演習</h3>
+      <p class="small">演習: 「チケットの状態（新規→調査中→対応中→完了）」を状態遷移図で書いてみましょう。</p>
+      <div class="editor-wrap" data-diagram="state">
+        <div>
+          <label for="stateInput"><strong>Mermaid入力</strong></label>
+          <textarea id="stateInput" spellcheck="false">stateDiagram
+  [*] --> 新規
+  新規 --> 調査中: 担当割当
+  調査中 --> 対応中: 原因特定
+  対応中 --> 完了: 修正反映
+  完了 --> [*]</textarea>
+          <div class="toolbar">
+            <button class="primary render-btn" data-target="state">図を描画</button>
+            <button class="reset-btn" data-target="state">例に戻す</button>
+          </div>
+        </div>
+        <div>
+          <strong>プレビュー</strong>
+          <div id="statePreview" class="preview"></div>
+          <div id="stateStatus" class="status"></div>
+        </div>
+      </div>
+      <p class="footer-note">エラー例: <code>stateDiagram</code> の誤記、遷移の矢印不足。</p>
+    </section>
+
+    <section class="card reference">
+      <h2>参考情報</h2>
+      <ul>
+        <li><a href="https://mermaid.ai/open-source/intro/index.html?utm_source=mermaid_js&utm_medium=landing_pop_up&utm_campaign=docs_v1" target="_blank" rel="noopener noreferrer">Mermaid公式ドキュメント（Introduction）</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "loose",
+      theme: "default"
+    });
+
+    const samples = {
+      flow: `flowchart TD
+  A[障害受付] --> B[一次切り分け]
+  B --> C{復旧できた?}
+  C -->|Yes| D[完了報告]
+  C -->|No| E[二次対応へ連携]
+  D --> F[クローズ]
+  E --> F`,
+      sequence: `sequenceDiagram
+  participant OP as 運用担当
+  participant US as 利用部門
+  participant SYS as 対象システム
+  OP->>US: メンテナンス通知
+  US-->>OP: 了承
+  OP->>SYS: 停止
+  OP->>SYS: 作業実施
+  OP->>SYS: 起動確認
+  OP->>US: 完了連絡`,
+      state: `stateDiagram
+  [*] --> 監視中
+  監視中 --> 障害検知: アラート発報
+  障害検知 --> 対応中: 担当アサイン
+  対応中 --> 復旧: 修正完了
+  復旧 --> 監視中`
+    };
+
+    function setStatus(status, message, ok) {
+      status.textContent = message;
+      status.className = ok ? "status ok" : "status ng";
+    }
+
+    async function renderDiagram(type) {
+      const input = document.getElementById(`${type}Input`);
+      const preview = document.getElementById(`${type}Preview`);
+      const status = document.getElementById(`${type}Status`);
+      const source = input.value.trim();
+      if (!source) {
+        preview.innerHTML = "";
+        setStatus(status, "入力が空です。Mermaid記法を入力してください。", false);
+        return;
+      }
+      const id = `mmd-${type}-${Date.now()}`;
+      try {
+        const { svg } = await mermaid.render(id, source);
+        preview.innerHTML = svg;
+        setStatus(status, "描画成功: 記法は有効です。", true);
+      } catch (error) {
+        preview.innerHTML = "";
+        setStatus(status, `描画失敗: ${error.message}`, false);
+      }
+    }
+
+    document.querySelectorAll(".render-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        renderDiagram(button.dataset.target);
+      });
+    });
+
+    document.querySelectorAll(".reset-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        const type = button.dataset.target;
+        const input = document.getElementById(`${type}Input`);
+        input.value = samples[type];
+        renderDiagram(type);
+      });
+    });
+
+    renderDiagram("flow");
+    renderDiagram("sequence");
+    renderDiagram("state");
+  </script>
+</body>
+</html>
