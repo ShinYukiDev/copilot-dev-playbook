@@ -323,7 +323,8 @@
         setStatus(status, "描画成功: 記法は有効です。", true);
       } catch (error) {
         preview.innerHTML = "";
-        setStatus(status, `描画失敗: ${error.message}`, false);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        setStatus(status, `描画失敗: ${errorMessage}`, false);
       }
     }
 
