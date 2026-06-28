@@ -1,4 +1,4 @@
-﻿# 03_practice/prompt_templates
+﻿# 03_practice/prompts
 
 このディレクトリは、実務で再利用できるプロンプトテンプレート（.prompt.md）を集約しています。
 
@@ -9,11 +9,13 @@
 
 ## テンプレート一覧
 
-| カテゴリ     | ファイル名                                 | 用途                                 |
-| :----------- | :----------------------------------------- | :----------------------------------- |
-| ドキュメント | doc-create-spec-from-code-batch.prompt.md  | バッチ処理コードから仕様書を自動生成 |
-| ドキュメント | doc-create-spec-from-code-screen.prompt.md | 画面系コードから仕様書を自動生成     |
-| 品質保証     | qa-review-document.prompt.md               | ドキュメントの汎用レビュー           |
+| カテゴリ     | ファイル名                                   | 用途                                         |
+| :----------- | :------------------------------------------- | :------------------------------------------- |
+| ドキュメント | doc-create-spec-from-code-batch.prompt.md    | バッチ処理コードから仕様書を自動生成         |
+| ドキュメント | doc-create-spec-from-code-screen.prompt.md   | 画面系コードから仕様書を自動生成             |
+| 品質保証     | qa-review-doc.prompt.md                      | 仕様書・手順書の汎用レビュー                 |
+| 運用         | ops-create-incident-first-response.prompt.md | 障害一次対応メモを作成し、初動を標準化する   |
+| 品質保証     | qa-create-test-perspectives.prompt.md        | 仕様や変更内容からテスト観点を抽出・整理する |
 
 ### カテゴリについて
 

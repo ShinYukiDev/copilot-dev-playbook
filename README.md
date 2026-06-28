@@ -65,7 +65,7 @@
 
 ### 3. 実務で使う場合
 
-- `03_practice/prompt_templates` を活用
+- `03_practice/prompts` を活用
 - 必要に応じてカスタマイズ
 
 ### 4. 改善する場合
