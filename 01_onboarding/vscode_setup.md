@@ -14,11 +14,9 @@
 
 開始前に、以下が完了していることを確認してください。
 
-- [ ] Windows 10 / 11、macOS、または Linux のいずれかをご使用
+- [ ] Windows 10 / 11 をご使用
 - [ ] インターネット接続が可能
 - [ ] 必要に応じて、管理者権限でソフトウェアをインストール可能
-
-**このガイドでは Windows での手順を主に説明します。macOS / Linux でも基本は同じです。**
 
 ---
 
@@ -26,32 +24,15 @@
 
 ### 1. VS Code のインストール
 
-#### Windows / macOS の場合
-
 1. [VS Code 公式ページ](https://code.visualstudio.com/) にアクセス
-2. ご使用の OS に合わせてダウンロード
+2. Windows 版をダウンロード
 3. インストーラーを実行して、デフォルト設定でインストール完了
-
-#### Linux の場合
-
-ご使用のディストリビューションに応じて、パッケージマネージャーからインストール：
-
-```bash
-# Ubuntu / Debian
-sudo apt install code
-
-# Fedora
-sudo dnf install code
-
-# Arch
-sudo pacman -S code
-```
 
 #### インストール確認
 
 VS Code を起動して、バージョンが表示されれば OK です。
 
-**左下のギア アイコン → About** で、インストールされたバージョンを確認できます。
+**左下のギア アイコン → About** で、インストールされたバージョンを確認できます.
 
 ---
 
@@ -154,7 +135,7 @@ VS Code を起動して、バージョンが表示されれば OK です。
 
 Copilot Chat が正常に動作するか確認します。
 
-1. **Ctrl + Shift + I** キー（Windows）または **Cmd + Shift + I** キー（Mac）を押す
+1. **Ctrl + Shift + I** キーを押す
 2. 右側に Copilot Chat パネルが表示される
 3. 以下のメッセージを入力：
 
@@ -168,7 +149,7 @@ Copilot Chat が正常に動作するか確認します。
 
 Copilot の コード補完が動作するか確認します。
 
-1. **Ctrl + K → Ctrl + O**（Windows）で新規フォルダを作成
+1. **Ctrl + K → Ctrl + O** で新規フォルダを作成
 2. フォルダ内に **test.cs** ファイルを作成
 3. 以下のコメントを入力：
 
